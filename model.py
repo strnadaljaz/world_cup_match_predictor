@@ -1,31 +1,35 @@
-from getFifaRank import getFifaRank
+from getNations import getNations
 
 
 class Team:
-    # form bo list intigerjev
-    def __init__(self, elo: int, fifaRank: int, form: list[int], goalsScored: int, goalsReceived: int):
+    def __init__(self, name: str, elo: int, fifaRank: int, form: list[int], goalsScored: int, goalsReceived: int):
+        self.name = name
         self.elo = elo
         self.fifaRank = fifaRank
         self.form = form
         self.goalsScored = goalsScored
         self.goalsReceived = goalsReceived
 
+    def toString(self) -> str:
+        return f'{self.name}, {self.elo}, {self.fifaRank}, {self.form}, {self.goalsScored}, {self.goalsReceived}'
 
-def createTeam(teamName: str):
-    fifaRank = getFifaRank(teamName)
 
-    return Team(0, fifaRank, [0], 0, 0)
+def createTeams() -> list[Team]:
+    nations: list = getNations()
+
+    teams: list[Team] = []
+
+    for nation in nations:
+        teams.append(Team(nation["Country"], 1500, nation["Rank"], [], 0, 0))
+
+    return teams
 
 
 def main():
-    team1Name: str = input("Enter first team: ")
-    team2Name: str = input("Enter second team: ")
 
-    team1: Team = createTeam(team1Name)
-    team2: Team = createTeam(team2Name)
+    teams: list[Team] = createTeams()
 
-    print(team1)
-    print(team2)
-
+    for team in teams:
+        print(team.toString())
 
 main()
