@@ -1,5 +1,42 @@
 from getNations import getNations, readMatches, writeToCsv
 from Team import Team
+import xgboost as xgb
+import pandas as pd
+from sklearn.metrics import accuracy_score
+
+
+def main():
+
+    teams: list[Team] = createTeams()
+    matches = readMatches()
+
+    X, Y = getTrainingData(teams, matches)
+
+    df = pd.DataFrame(X)
+
+    split = int(len(df) * 0.8)
+    X_train = df.iloc[:split]
+    X_test = df.iloc[split:]
+
+    Y_train = Y[:split]
+    Y_test = Y[split:]
+
+    model = xgb.XGBClassifier(
+        objective="multi:softprob",
+        num_class=3,
+        max_depth=5,
+        learning_rate=0.05,
+        n_estimators=300,
+        random_state=42
+    )
+
+    model.fit(X_train, Y_train)
+
+    Y_pred = model.predict(X_test)
+
+    accuracy = round(accuracy_score(Y_test, Y_pred) * 100, 2)
+
+    print(f'{accuracy}%')
 
 
 def createTeams() -> list[Team]:
@@ -65,13 +102,12 @@ def getTrainingData(teams: list[Team], matches: list):
         eloDiff = homeElo - awayElo
 
         row = {
-            "date": match["date"],
             "home_elo": homeElo,
             "away_elo": awayElo,
             "elo_diff": eloDiff,
             "home_form": homeForm,
             "away_form": awayForm,
-            "neutral": bool(match["neutral"].capitalize())
+            "neutral": 0 if match['neutral'] == 'FALSE' else 1
         }
 
         X.append(row)
@@ -116,17 +152,12 @@ def getTrainingData(teams: list[Team], matches: list):
         homeTeamObject.form.append(Sh)
         awayTeamObject.form.append(Sa)
 
+        homeTeamObject.goalsScored += homeScore
+        awayTeamObject.goalsScored += awayScore
+        homeTeamObject.matchesPlayed += 1
+        awayTeamObject.matchesPlayed += 1
+
     return X, Y
-
-
-def main():
-
-    teams: list[Team] = createTeams()
-    matches = readMatches()
-
-    X, Y = getTrainingData(teams, matches)
-
-    # writeToCsv(teams)
 
 
 main()
