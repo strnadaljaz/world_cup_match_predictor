@@ -1,5 +1,5 @@
 class Team:
-    def __init__(self, name: str, elo: int, fifaRank: int, form: list[float], goalsScored: int, goalsReceived: int):
+    def __init__(self, name: str, elo: int, fifaRank: int, form: list[float], goalsScored: list[int], goalsReceived: list[int]):
         self.name = name
         self.elo = elo
         self.fifaRank = fifaRank
