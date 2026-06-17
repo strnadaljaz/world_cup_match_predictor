@@ -1,11 +1,11 @@
 class Team:
-    def __init__(self, name: str, elo: int, fifaRank: int, form: list[float], goalsScored: list[int], goalsReceived: list[int]):
+    def __init__(self, name: str, elo: int, fifa_rank: int, form: list[float], goals_scored: list[int], goals_received: list[int]):
         self.name = name
         self.elo = elo
-        self.fifaRank = fifaRank
+        self.fifa_rank = fifa_rank
         self.form = form
-        self.goalsScored = goalsScored
-        self.goalsReceived = goalsReceived
+        self.goals_scored = goals_scored
+        self.goals_received = goals_received
 
     def toString(self) -> str:
-        return f'{self.name}, {self.elo}, {self.fifaRank}, {self.form}, {self.goalsScored}, {self.goalsReceived}'
+        return f'{self.name}, {self.elo}, {self.fifa_rank}, {self.form}, {self.goals_scored}, {self.goals_received}'
