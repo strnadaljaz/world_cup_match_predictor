@@ -13,7 +13,6 @@ def main():
 
     teams: list[Team] = createTeams()
     team_map = {team.name: team for team in teams}
-
     while (choice != 3):
         print("1. train and save model")
         print("2. Use model")
@@ -51,4 +50,5 @@ def main():
                 round(probs[1] * 100)}% \n - {away_team} win: {round(probs[0] * 100)}%')
 
 
-main()
+if __name__ == "__main__":
+    main()
