@@ -1,4 +1,4 @@
-from fastapi import FastApi
+from fastapi import FastAPI
 from football.teams import createTeams
 from xgboost import XGBClassifier
 from Team import Team
@@ -6,12 +6,14 @@ from numpy import ndarray
 from model.model import calculateProbabilities, loadModel
 import json
 
-app: FastApi = FastApi()
+app: FastAPI = FastAPI()
 
 teams: list[Team] = createTeams()
 team_map = {team.name: team for team in teams}
 
 model: XGBClassifier = loadModel("model.json")
+
+print("Server ready for requests")
 
 
 @app.get("/probabilities")
