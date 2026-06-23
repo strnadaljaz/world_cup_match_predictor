@@ -5,6 +5,7 @@ from Team import Team
 from numpy import ndarray
 from model.model import calculateProbabilities, loadModel
 import json
+import codecs
 
 app: FastAPI = FastAPI()
 
@@ -26,6 +27,12 @@ async def probabilities():
     probs: ndarray = calculateProbabilities(home_team, away_team,
                                             team_map, neutral, model)
 
-    res = json.dumps(probs)
+    probs_list = probs.tolist()
 
-    return res
+    data = {
+        "home_win": probs_list[2],
+        "draw": probs_list[1],
+        "away_win": probs_list[0]
+    }
+
+    return data
