@@ -1,5 +1,6 @@
-xgboost
 numpy
-csv
 pandas
-sklearn
+scipy
+scikit-learn
+xgboost
+fastapi
