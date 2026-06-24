@@ -11,18 +11,24 @@ export default function Home() {
 
     async function SubmitForm() {
         if (formData.homeCountry && formData.awayCountry) {
-            const params = new URLSearchParams({
-                home: formData.homeCountry.toLowerCase(),
-                away: formData.awayCountry.toLowerCase(),
-                neutral: formData.neutral ? "1" : "0",
-            });
+            const params = {
+                home_team: formData.homeCountry.toLowerCase(),
+                away_team: formData.awayCountry.toLowerCase(),
+                neutral: formData.neutral,
+            };
+
+            const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
 
             const response = await fetch(
-                `https://world-cup-match-predictor.onrender.com/probabilities?${params}`
-            );
+                URL, {
+                method: "POST",
+                body: JSON.stringify(params),
+                headers: {
+                    "Content-type": "application/json"
+                }
+            });
 
-            const data = await response.text();
-
+            const data = await response.json();
             console.log(data);
         }
     }
@@ -44,7 +50,7 @@ export default function Home() {
                 </div>
 
                 <section className="mt-10 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl sm:p-8">
-                    <form className="grid gap-5 md:grid-cols-3">
+                    <div className="grid gap-5 md:grid-cols-3">
                         <div className="space-y-2">
                             <label
                                 htmlFor="homeCountry"
@@ -132,7 +138,7 @@ export default function Home() {
                                 </span>
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </section>
 
                 <section className="mt-8 flex-1 rounded-3xl border border-dashed border-white/10 bg-slate-950/30 p-6 text-sm text-slate-400 sm:p-8">
