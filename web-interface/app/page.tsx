@@ -6,8 +6,26 @@ export default function Home() {
     const [formData, setFormData] = useState({
         homeCountry: "",
         awayCountry: "",
-        answer: false,
+        neutral: false,
     });
+
+    async function SubmitForm() {
+        if (formData.homeCountry && formData.awayCountry) {
+            const params = new URLSearchParams({
+                home: formData.homeCountry.toLowerCase(),
+                away: formData.awayCountry.toLowerCase(),
+                neutral: formData.neutral ? "1" : "0",
+            });
+
+            const response = await fetch(
+                `https://world-cup-match-predictor.onrender.com/probabilities?${params}`
+            );
+
+            const data = await response.text();
+
+            console.log(data);
+        }
+    }
 
     return (
         <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.14),_transparent_28%),linear-gradient(180deg,#020617_0%,#030712_48%,#020617_100%)] text-slate-100">
@@ -90,11 +108,11 @@ export default function Home() {
                             </label>
                             <select
                                 id="answer"
-                                value={String(formData.answer)}
+                                value={String(formData.neutral)}
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
-                                        answer: e.target.value === "true",
+                                        neutral: e.target.value === "true",
                                     })
                                 }
                                 className="h-12 w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 text-sm text-white outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/20"
@@ -106,7 +124,7 @@ export default function Home() {
 
                         <div className="md:col-span-3 flex justify-end pt-2">
                             <button
-                                type="submit"
+                                onClick={SubmitForm}
                                 className="group inline-flex items-center justify-center rounded-2xl border border-cyan-400/30 bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-cyan-500/30 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 cursor-pointer"
                             >
                                 <span className="transition group-hover:tracking-wide">
