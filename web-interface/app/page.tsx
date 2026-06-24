@@ -47,6 +47,9 @@ export default function Home() {
                         Tune the match inputs now. Prediction charts and output
                         will sit below this section later.
                     </p>
+                    <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
+                        Model accuracy: <u>59.99%</u>
+                    </p>
                 </div>
 
                 <section className="mt-10 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl sm:p-8">
@@ -131,9 +134,9 @@ export default function Home() {
                         <div className="md:col-span-3 flex justify-end pt-2">
                             <button
                                 onClick={SubmitForm}
-                                className="group inline-flex items-center justify-center rounded-2xl border border-cyan-400/30 bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-cyan-500/30 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 cursor-pointer"
+                                className="group inline-flex items-center justify-center rounded-2xl border border-cyan-400/30 bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition duration-400 hover:-translate-y-1 hover:shadow-cyan-500/30 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 cursor-pointer"
                             >
-                                <span className="transition group-hover:tracking-wide">
+                                <span className="">
                                     Predict match
                                 </span>
                             </button>
@@ -143,6 +146,9 @@ export default function Home() {
 
                 <section className="mt-8 flex-1 rounded-3xl border border-dashed border-white/10 bg-slate-950/30 p-6 text-sm text-slate-400 sm:p-8">
                     Charts and prediction output will live here.
+                </section>
+                <section>
+                    <p>* Note: predictor can make mistakes. I am not responsible for any miss predictions.</p>
                 </section>
             </div>
         </main>
