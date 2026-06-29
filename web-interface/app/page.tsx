@@ -1,23 +1,112 @@
 "use client"
 import { countries } from "@Components/Countries";
 import { useState } from "react";
+import { useEffect } from "react";
+import { Chart } from "chart.js/auto";
 
 export default function Home() {
+    const COLORS = {
+        home: "#4CAF50",  // green
+        draw: "#FFC107",  // amber
+        away: "#2196F3",   // blue
+        remainder: "#E0E0E0"
+    };
+
     const [formData, setFormData] = useState({
         homeCountry: "",
         awayCountry: "",
         neutral: false,
     });
 
+    const [chartData, setChartData] = useState({
+        "home_win": null,
+        "draw": null,
+        "away_win": null,
+    });
+
+    useEffect(() => {
+        let charts: Chart[] = [];
+
+        if (chartData.home_win != null) {
+            charts.push(
+                new Chart("home_win_chart", {
+                    type: "doughnut",
+                    data: {
+                        datasets: [
+                            {
+                                data: [
+                                    chartData.home_win,
+                                    100 - chartData.home_win
+                                ],
+                                backgroundColor: [COLORS.home, COLORS.remainder],
+                            }
+                        ]
+
+                    },
+                    options: {}
+                })
+            );
+        }
+
+        if (chartData.draw != null) {
+            charts.push(
+                new Chart("draw_chart", {
+                    type: "doughnut",
+                    data: {
+                        datasets: [
+                            {
+                                data: [
+                                    chartData.draw,
+                                    100 - chartData.draw
+                                ],
+                                backgroundColor: [COLORS.draw, COLORS.remainder],
+                            }
+                        ]
+
+                    },
+                    options: {}
+                })
+            );
+        }
+
+        if (chartData.away_win != null) {
+            charts.push(
+                new Chart("away_win_chart", {
+                    type: "doughnut",
+                    data: {
+                        datasets: [
+                            {
+                                data: [
+                                    chartData.away_win,
+                                    100 - chartData.away_win
+                                ],
+                                backgroundColor: [COLORS.away, COLORS.remainder],
+                            }
+                        ]
+
+                    },
+                    options: {}
+                })
+            );
+        }
+
+        return () => {
+            charts.forEach(chart => chart.destroy());
+        }
+    }, [chartData]);
+
     async function SubmitForm() {
-        if (formData.homeCountry && formData.awayCountry) {
+        if (formData.homeCountry &&
+            formData.awayCountry &&
+            (formData.homeCountry != formData.awayCountry)) {
             const params = {
                 home_team: formData.homeCountry.toLowerCase(),
                 away_team: formData.awayCountry.toLowerCase(),
                 neutral: formData.neutral,
             };
 
-            const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
+            const URL = "http://localhost:8000/probabilities";
+            // const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
 
             const response = await fetch(
                 URL, {
@@ -29,7 +118,16 @@ export default function Home() {
             });
 
             const data = await response.json();
-            console.log(data);
+            data["home_win"] *= 100;
+            data["away_win"] *= 100;
+            data["draw"] *= 100;
+            setChartData(data);
+        }
+        else if (!formData.homeCountry || !formData.awayCountry) {
+            alert("Enter both countries!");
+        }
+        else if (formData.homeCountry === formData.awayCountry) {
+            alert("Home and away are the same!");
         }
     }
 
@@ -143,14 +241,28 @@ export default function Home() {
                         </div>
                     </div>
                 </section>
-
-                <section className="mt-8 flex-1 rounded-3xl border border-dashed border-white/10 bg-slate-950/30 p-6 text-sm text-slate-400 sm:p-8">
-                    Charts and prediction output will live here.
-                </section>
-                <section>
+                <section className="pt-4">
                     <p>* Note: predictor can make mistakes. I am not responsible for any miss predictions.</p>
                 </section>
-            </div>
-        </main>
+                <section className="mt-8 flex-1 rounded-3xl border border-dashed border-white/10 bg-slate-950/30 p-6 text-sm text-slate-400 sm:p-8">
+                    {(chartData.home_win != null) &&
+                        <div className="columns-3">
+                            <div>
+                                <h2>Home win</h2>
+                                <canvas id="home_win_chart"></canvas>
+                            </div>
+                            <div>
+                                <h2>Draw</h2>
+                                <canvas id="draw_chart"></canvas>
+                            </div>
+                            <div>
+                                <h2>Away win</h2>
+                                <canvas id="away_win_chart"></canvas>
+                            </div>
+                        </div>
+                    }
+                </section>
+            </div >
+        </main >
     );
 }
