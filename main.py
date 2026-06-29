@@ -12,7 +12,7 @@ def main():
     model_file = None
 
     teams: list[Team] = createTeams()
-    team_map = {team.name: team for team in teams}
+    team_map = {team.name.lower(): team for team in teams}
     while (choice != 3):
         print("1. train and save model")
         print("2. Use model")

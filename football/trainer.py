@@ -23,8 +23,8 @@ def getTrainingData(team_map, matches: list) -> tuple[list, list]:
     Y = []
 
     for match in matches:
-        home_team: str = match['home_team']
-        away_team: str = match['away_team']
+        home_team: str = match['home_team'].lower()
+        away_team: str = match['away_team'].lower()
         home_score: int = int(match['home_score'])
         away_score: int = int(match['away_score'])
         neutral: bool = match['neutral']

@@ -3,9 +3,12 @@ from football.teams import createTeams
 from xgboost import XGBClassifier
 from Team import Team
 from numpy import ndarray
-from model.model import calculateProbabilities, loadModel
+from model.model import calculateProbabilities
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from football.trainer import getTrainingData
+from data.csv_reader import readDataFromCsv
+from football.trainer import trainModel
 
 
 class MatchRequest(BaseModel):
@@ -27,7 +30,11 @@ app.add_middleware(
 teams: list[Team] = createTeams()
 team_map = {team.name.lower(): team for team in teams}
 
-model: XGBClassifier = loadModel("model.json")
+matches = readDataFromCsv("results.csv")
+
+X, Y = getTrainingData(team_map, matches)
+
+model: XGBClassifier = trainModel(X, Y)
 
 print("Server ready for requests")
 
