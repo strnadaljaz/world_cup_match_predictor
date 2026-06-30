@@ -26,71 +26,59 @@ export default function Home() {
 
     useEffect(() => {
         let charts: Chart[] = [];
+        let timers: ReturnType<typeof setTimeout>[] = [];
+
+        function createAnimatedDoughnutChart(
+            canvasId: string,
+            targetValue: number,
+            color: string,
+            delay = 0
+        ) {
+            const canvas = document.getElementById(canvasId) as HTMLCanvasElement | null;
+            if (!canvas) return;
+
+            const chart = new Chart(canvas, {
+                type: "doughnut",
+                data: {
+                    datasets: [
+                        {
+                            data: [0, 100],
+                            backgroundColor: [color, COLORS.remainder],
+                        }
+                    ]
+                },
+                options: {
+                    animation: {
+                        duration: 1200,
+                        easing: "easeOutQuart",
+                    },
+                }
+            });
+
+            charts.push(chart);
+
+            timers.push(
+                setTimeout(() => {
+                    chart.data.datasets[0].data = [targetValue, 100 - targetValue];
+                    chart.update();
+                }, delay)
+            );
+        }
 
         if (chartData.home_win != null) {
-            charts.push(
-                new Chart("home_win_chart", {
-                    type: "doughnut",
-                    data: {
-                        datasets: [
-                            {
-                                data: [
-                                    chartData.home_win,
-                                    100 - chartData.home_win
-                                ],
-                                backgroundColor: [COLORS.home, COLORS.remainder],
-                            }
-                        ]
-
-                    },
-                    options: {}
-                })
-            );
+            createAnimatedDoughnutChart("home_win_chart", chartData.home_win, COLORS.home, 0);
         }
 
         if (chartData.draw != null) {
-            charts.push(
-                new Chart("draw_chart", {
-                    type: "doughnut",
-                    data: {
-                        datasets: [
-                            {
-                                data: [
-                                    chartData.draw,
-                                    100 - chartData.draw
-                                ],
-                                backgroundColor: [COLORS.draw, COLORS.remainder],
-                            }
-                        ]
-
-                    },
-                    options: {}
-                })
-            );
+            createAnimatedDoughnutChart("draw_chart", chartData.draw, COLORS.draw, 120);
         }
 
         if (chartData.away_win != null) {
-            charts.push(
-                new Chart("away_win_chart", {
-                    type: "doughnut",
-                    data: {
-                        datasets: [
-                            {
-                                data: [
-                                    chartData.away_win,
-                                    100 - chartData.away_win
-                                ],
-                                backgroundColor: [COLORS.away, COLORS.remainder],
-                            }
-                        ]
-
-                    },
-                    options: {}
-                })
-            );
+            createAnimatedDoughnutChart("away_win_chart", chartData.away_win, COLORS.away, 240);
         }
 
         return () => {
+            timers.forEach(timer => clearTimeout(timer));
             charts.forEach(chart => chart.destroy());
         }
     }, [chartData]);
@@ -105,8 +93,8 @@ export default function Home() {
                 neutral: formData.neutral,
             };
 
-            // const URL = "http://localhost:8000/probabilities";
-            const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
+            const URL = "http://localhost:8000/probabilities";
+            // const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
 
             const response = await fetch(
                 URL, {
