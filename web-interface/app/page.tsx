@@ -93,8 +93,8 @@ export default function Home() {
                 neutral: formData.neutral,
             };
 
-            const URL = "http://localhost:8000/probabilities";
-            // const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
+            // const URL = "http://localhost:8000/probabilities";
+            const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
 
             const response = await fetch(
                 URL, {
