@@ -1,7 +1,7 @@
 describe('Match predictor API', () => {
     test('returns probabilities', async () => {
-        const URL = "http://127.0.0.1:8000/probabilities";
-        // const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
+        // const URL = "http://127.0.0.1:8000/probabilities";
+        const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
 
         const params = {
             home_team: "argentina",
