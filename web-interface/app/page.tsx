@@ -9,7 +9,7 @@ export default function Home() {
         home: "#4CAF50",  // green
         draw: "#FFC107",  // amber
         away: "#2196F3",   // blue
-        remainder: "#E0E0E0"
+        remainder: "#020617"
     };
 
     const [formData, setFormData] = useState({
@@ -44,6 +44,7 @@ export default function Home() {
                         {
                             data: [0, 100],
                             backgroundColor: [color, COLORS.remainder],
+                            borderColor: "#2B2B3B"
                         }
                     ]
                 },
@@ -93,8 +94,7 @@ export default function Home() {
                 neutral: formData.neutral,
             };
 
-            // const URL = "http://localhost:8000/probabilities";
-            const URL = "https://world-cup-match-predictor.onrender.com/probabilities";
+            const URL = process.env.NEXT_PUBLIC_LINK || "https://world-cup-match-predictor.onrender.com/probabilities";
 
             const response = await fetch(
                 URL, {
@@ -147,7 +147,8 @@ export default function Home() {
                             >
                                 Home country
                             </label>
-                            <select
+                            <input
+                                list="countries"
                                 id="homeCountry"
                                 value={formData.homeCountry}
                                 onChange={(e) =>
@@ -157,14 +158,7 @@ export default function Home() {
                                     })
                                 }
                                 className="h-12 w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 text-sm text-white outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/20"
-                            >
-                                <option value="">Select a country</option>
-                                {countries.map((country) => (
-                                    <option key={country} value={country}>
-                                        {country}
-                                    </option>
-                                ))}
-                            </select>
+                            ></input>
                         </div>
 
                         <div className="space-y-2">
@@ -174,7 +168,8 @@ export default function Home() {
                             >
                                 Away country
                             </label>
-                            <select
+                            <input
+                                list="countries"
                                 id="awayCountry"
                                 value={formData.awayCountry}
                                 onChange={(e) =>
@@ -184,15 +179,14 @@ export default function Home() {
                                     })
                                 }
                                 className="h-12 w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 text-sm text-white outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/20"
-                            >
-                                <option value="">Select a country</option>
-                                {countries.map((country) => (
-                                    <option key={country} value={country}>
-                                        {country}
-                                    </option>
-                                ))}
-                            </select>
+                            ></input>
                         </div>
+
+                        <datalist id="countries">
+                            {countries.map((country) => (
+                                <option value={country} />
+                            ))}
+                        </datalist>
 
                         <div className="space-y-2">
                             <label
