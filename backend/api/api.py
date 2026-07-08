@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from football.teams import createTeams
 from xgboost import XGBClassifier
 from Team import Team
@@ -9,6 +9,9 @@ from pydantic import BaseModel
 from football.trainer import getTrainingData
 from data.csv_reader import readDataFromCsv
 from football.trainer import trainModel
+import asyncio
+
+MAX_REQUESTS = 2
 
 
 class MatchRequest(BaseModel):
@@ -38,20 +41,40 @@ model: XGBClassifier = trainModel(X, Y)
 
 print("Server ready for requests")
 
+semaphore = asyncio.Semaphore(MAX_REQUESTS)
+
 
 @app.post("/probabilities")
 async def probabilities(
     req: MatchRequest
 ):
-    probs: ndarray = calculateProbabilities(req.home_team, req.away_team,
-                                            team_map, req.neutral, model)
+    try:
+        await asyncio.wait_for(semaphore.acquire(), timeout=1)
+    except asyncio.TimeoutError:
+        raise HTTPException(
+            status_code=429,
+            detail="Server is busy, try again later."
+        )
 
-    probs_list = probs.tolist()
+    try:
+        probs = await asyncio.to_thread(
+            calculateProbabilities,
+            req.home_team,
+            req.away_team,
+            team_map,
+            req.neutral,
+            model
+        )
 
-    data = {
-        "home_win": probs_list[2],
-        "draw": probs_list[1],
-        "away_win": probs_list[0]
-    }
+        probs_list = probs.tolist()
 
-    return data
+        data = {
+            "home_win": probs_list[2],
+            "draw": probs_list[1],
+            "away_win": probs_list[0]
+        }
+
+        return data
+
+    finally:
+        semaphore.release()
