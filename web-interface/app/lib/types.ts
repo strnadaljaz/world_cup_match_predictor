@@ -22,3 +22,8 @@ export type NeutralInputType = {
     formData: formDataType;
     setFormData: React.Dispatch<React.SetStateAction<formDataType>>;
 };
+
+export type SubmitButtonType = {
+    formData: formDataType;
+    setChartData: React.Dispatch<React.SetStateAction<chartDataType>>;
+}
