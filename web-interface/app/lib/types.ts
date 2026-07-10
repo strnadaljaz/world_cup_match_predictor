@@ -17,3 +17,8 @@ export type countriesInputType = {
     formData: formDataType;
     setFormData: React.Dispatch<React.SetStateAction<formDataType>>;
 }
+
+export type NeutralInputType = {
+    formData: formDataType;
+    setFormData: React.Dispatch<React.SetStateAction<formDataType>>;
+};
