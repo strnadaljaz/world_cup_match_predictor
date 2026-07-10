@@ -11,6 +11,7 @@ import SubmitForm from "./lib/submitForm";
 import NeutralInput from "./Components/NeutralInput";
 import CountriesDatalist from "./Components/CountriesDatalist";
 import SubmitButton from "./Components/SumbitButton";
+import Charts from "./Components/Charts";
 
 export default function Home() {
     
@@ -113,20 +114,7 @@ export default function Home() {
                 </section>
                 <section className="mt-8 flex-1 rounded-3xl border border-dashed border-white/10 bg-slate-950/30 p-6 text-sm text-slate-400 sm:p-8">
                     {(chartData.home_win != null) &&
-                        <div className="columns-3">
-                            <div>
-                                <h2>Home win</h2>
-                                <canvas id="home_win_chart"></canvas>
-                            </div>
-                            <div>
-                                <h2>Draw</h2>
-                                <canvas id="draw_chart"></canvas>
-                            </div>
-                            <div>
-                                <h2>Away win</h2>
-                                <canvas id="away_win_chart"></canvas>
-                            </div>
-                        </div>
+                        <Charts /> 
                     }
                 </section>
             </div >
