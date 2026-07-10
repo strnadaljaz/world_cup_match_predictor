@@ -25,7 +25,8 @@ app: FastAPI = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://international-match-predictor.vercel.app"
+        "https://international-match-predictor.vercel.app",
+        "http://localhost:3000"
     ],
     allow_credentials=False,
     allow_methods=["POST"],

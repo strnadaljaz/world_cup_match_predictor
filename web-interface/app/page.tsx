@@ -94,7 +94,7 @@ export default function Home() {
                 neutral: formData.neutral,
             };
 
-            const URL = "https://strnadserver.pike-solfege.ts.net/probabilities";
+            const URL = process.env.NEXT_PUBLIC_IP || "https://strnadserver.pike-solfege.ts.net/probabilities";
 
             const response = await fetch(
                 URL, {
