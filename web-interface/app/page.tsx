@@ -3,27 +3,15 @@ import { countries } from "@Components/Countries";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Chart } from "chart.js/auto";
+import { COLORS } from "./lib/Colors";
+import { useChartData } from "./hooks/useChartData";
+import { useFormData } from "./hooks/useFormData";
 
 export default function Home() {
-    const COLORS = {
-        home: "#4CAF50",  // green
-        draw: "#FFC107",  // amber
-        away: "#2196F3",   // blue
-        remainder: "#020617"
-    };
-
-    const [formData, setFormData] = useState({
-        homeCountry: "",
-        awayCountry: "",
-        neutral: false,
-    });
-
-    const [chartData, setChartData] = useState({
-        "home_win": null,
-        "draw": null,
-        "away_win": null,
-    });
-
+    
+    const { chartData, setChartData } = useChartData();
+    const { formData, setFormData } = useFormData(); 
+    
     useEffect(() => {
         let charts: Chart[] = [];
         let timers: ReturnType<typeof setTimeout>[] = [];
