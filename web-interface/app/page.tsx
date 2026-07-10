@@ -94,7 +94,7 @@ export default function Home() {
                 neutral: formData.neutral,
             };
 
-            const URL = process.env.NEXT_PUBLIC_LINK || "https://world-cup-match-predictor.onrender.com/probabilities";
+            const URL = "https://strnadserver.pike-solfege.ts.net/probabilities";
 
             const response = await fetch(
                 URL, {

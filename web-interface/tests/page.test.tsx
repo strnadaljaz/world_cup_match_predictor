@@ -2,7 +2,6 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '@/app/page';
 import "@testing-library/jest-dom"
-// import test from 'node:test';
 
 global.fetch = jest.fn();
 
@@ -72,7 +71,7 @@ describe("button test", () => {
 
         await waitFor(() => {
             expect(fetch).toHaveBeenCalledWith(
-                process.env.NEXT_PUBLIC_LINK || "https://world-cup-match-predictor.onrender.com/probabilities",
+                "https://strnadserver.pike-solfege.ts.net/probabilities",
                 expect.objectContaining({
                     method: "POST",
                     headers: {
