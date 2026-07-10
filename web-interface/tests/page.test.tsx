@@ -1,6 +1,8 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Home from '@/app/page';
+import "@testing-library/jest-dom"
+// import test from 'node:test';
 
 global.fetch = jest.fn();
 
@@ -10,21 +12,21 @@ describe('Input test', () => {
     test("home team selector updates when user selects a team", async () => {
         render(<Home />);
 
-        const home_select = screen.getByLabelText("Home country");
+        const home_input = screen.getByLabelText("Home country");
 
-        await user.type(home_select, 'Argentina');
+        await user.type(home_input, 'Argentina');
 
-        expect(home_select.value).toBe('Argentina');
+        expect(home_input.value).toBe('Argentina');
     });
 
     test("away team selector updates when user selects a team", async () => {
         render(<Home />);
 
-        const away_select = screen.getByLabelText("Away country");
+        const away_input = screen.getByLabelText("Away country");
 
-        await user.type(away_select, 'Brazil');
+        await user.type(away_input, 'Brazil');
 
-        expect(away_select.value).toBe('Brazil');
+        expect(away_input.value).toBe('Brazil');
     });
 
     test('neutral ground selector updates when user sets it', async () => {
@@ -79,6 +81,52 @@ describe("button test", () => {
                     body: JSON.stringify(params)
                 })
             )
+        });
+    });
+});
+
+jest.mock("chart.js/auto", () => ({
+    Chart: jest.fn().mockImplementation(() => ({
+        data: {
+            datasets: [{ data: [] }],
+        },
+        update: jest.fn(),
+        destroy: jest.fn(),
+    })),
+}));
+
+
+
+describe("Charts test", () => {
+    const user = userEvent.setup();
+
+    test("Charts load", async () => {
+        (fetch as jest.Mock).mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                home_win: 0.5,
+                draw: 0.2,
+                away_win: 0.3
+            }),
+        });
+
+        render(<Home />);
+
+        const home_select = screen.getByLabelText("Home country");
+        await user.type(home_select, 'Argentina');
+
+        const away_select = screen.getByLabelText("Away country");
+        await user.type(away_select, 'Brazil');
+
+        const neutral_select = screen.getByLabelText('Neutral ground');
+        await user.selectOptions(neutral_select, 'Yes');
+
+        await user.click(screen.getByText("Predict match"));
+
+        await waitFor(() => {
+            expect(document.getElementById("home_win_chart")).toBeInTheDocument();
+            expect(document.getElementById("draw_chart")).toBeInTheDocument();
+            expect(document.getElementById("away_win_chart")).toBeInTheDocument();
         });
     });
 });
