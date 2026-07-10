@@ -129,25 +129,8 @@ export default function Home() {
 
                 <section className="mt-10 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl sm:p-8">
                     <div className="grid gap-5 md:grid-cols-3">
-                        <div className="space-y-2">
-                            <label
-                                htmlFor="homeCountry"
-                                className="text-sm font-medium text-slate-200"
-                            >
-                                Home country
-                            </label>
-                            <CountriesInput id="homeCountry" formData={formData} setFormData={setFormData} />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label
-                                htmlFor="awayCountry"
-                                className="text-sm font-medium text-slate-200"
-                            >
-                                Away country
-                            </label>
-                            <CountriesInput id="awayCountry" formData={formData} setFormData={setFormData}/>
-                        </div>
+                        <CountriesInput id="homeCountry" formData={formData} setFormData={setFormData} />                            
+                        <CountriesInput id="awayCountry" formData={formData} setFormData={setFormData}/>
 
                         <datalist id="countries">
                             {countries.map((country) => (
