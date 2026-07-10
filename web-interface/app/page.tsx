@@ -1,11 +1,12 @@
 "use client"
-import { countries } from "@Components/Countries";
+import { countries } from "@/app/lib/countries";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Chart } from "chart.js/auto";
-import { COLORS } from "./lib/Colors";
+import { COLORS } from "./lib/colors";
 import { useChartData } from "./hooks/useChartData";
 import { useFormData } from "./hooks/useFormData";
+import CountriesInput from "./Components/CountriesInput";
 
 export default function Home() {
     
@@ -135,18 +136,7 @@ export default function Home() {
                             >
                                 Home country
                             </label>
-                            <input
-                                list="countries"
-                                id="homeCountry"
-                                value={formData.homeCountry}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        homeCountry: e.target.value,
-                                    })
-                                }
-                                className="h-12 w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 text-sm text-white outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/20"
-                            ></input>
+                            <CountriesInput id="homeCountry" formData={formData} setFormData={setFormData} />
                         </div>
 
                         <div className="space-y-2">
@@ -156,18 +146,7 @@ export default function Home() {
                             >
                                 Away country
                             </label>
-                            <input
-                                list="countries"
-                                id="awayCountry"
-                                value={formData.awayCountry}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        awayCountry: e.target.value,
-                                    })
-                                }
-                                className="h-12 w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 text-sm text-white outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/20"
-                            ></input>
+                            <CountriesInput id="awayCountry" formData={formData} setFormData={setFormData}/>
                         </div>
 
                         <datalist id="countries">
