@@ -8,6 +8,8 @@ import { useChartData } from "./hooks/useChartData";
 import { useFormData } from "./hooks/useFormData";
 import CountriesInput from "./Components/CountriesInput";
 import SubmitForm from "./lib/submitForm";
+import NeutralInput from "./Components/NeutralInput";
+import CountriesDatalist from "./Components/CountriesDatalist";
 
 export default function Home() {
     
@@ -98,34 +100,9 @@ export default function Home() {
                         <CountriesInput id="homeCountry" formData={formData} setFormData={setFormData} />                            
                         <CountriesInput id="awayCountry" formData={formData} setFormData={setFormData}/>
 
-                        <datalist id="countries">
-                            {countries.map((country) => (
-                                <option value={country} key={country}/>
-                            ))}
-                        </datalist>
+                        <CountriesDatalist />
 
-                        <div className="space-y-2">
-                            <label
-                                htmlFor="answer"
-                                className="text-sm font-medium text-slate-200"
-                            >
-                                Neutral ground
-                            </label>
-                            <select
-                                id="answer"
-                                value={String(formData.neutral)}
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        neutral: e.target.value === "true",
-                                    })
-                                }
-                                className="h-12 w-full rounded-2xl border border-white/10 bg-slate-950/70 px-4 text-sm text-white outline-none transition focus:border-cyan-400/70 focus:ring-2 focus:ring-cyan-400/20"
-                            >
-                                <option value="true">Yes</option>
-                                <option value="false">No</option>
-                            </select>
-                        </div>
+                        <NeutralInput formData={formData} setFormData={setFormData}/>
 
                         <div className="md:col-span-3 flex justify-end pt-2">
                             <button
