@@ -7,6 +7,7 @@ import { COLORS } from "./lib/colors";
 import { useChartData } from "./hooks/useChartData";
 import { useFormData } from "./hooks/useFormData";
 import CountriesInput from "./Components/CountriesInput";
+import SubmitForm from "./lib/submitForm";
 
 export default function Home() {
     
@@ -71,42 +72,7 @@ export default function Home() {
             timers.forEach(timer => clearTimeout(timer));
             charts.forEach(chart => chart.destroy());
         }
-    }, [chartData]);
-
-    async function SubmitForm() {
-        if (formData.homeCountry &&
-            formData.awayCountry &&
-            (formData.homeCountry != formData.awayCountry)) {
-            const params = {
-                home_team: formData.homeCountry.toLowerCase(),
-                away_team: formData.awayCountry.toLowerCase(),
-                neutral: formData.neutral,
-            };
-
-            const URL = process.env.NEXT_PUBLIC_IP || "https://strnadserver.pike-solfege.ts.net/probabilities";
-
-            const response = await fetch(
-                URL, {
-                method: "POST",
-                body: JSON.stringify(params),
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-
-            const data = await response.json();
-            data["home_win"] *= 100;
-            data["away_win"] *= 100;
-            data["draw"] *= 100;
-            setChartData(data);
-        }
-        else if (!formData.homeCountry || !formData.awayCountry) {
-            alert("Enter both countries!");
-        }
-        else if (formData.homeCountry === formData.awayCountry) {
-            alert("Home and away are the same!");
-        }
-    }
+    }, [chartData]); 
 
     return (
         <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.14),_transparent_28%),linear-gradient(180deg,#020617_0%,#030712_48%,#020617_100%)] text-slate-100">
@@ -164,7 +130,9 @@ export default function Home() {
                         <div className="md:col-span-3 flex justify-end pt-2">
                             <button
                                 id="submit_button"
-                                onClick={SubmitForm}
+                                onClick={() => {
+                                    SubmitForm(formData, setChartData);
+                                }}
                                 className="group inline-flex items-center justify-center rounded-2xl border border-cyan-400/30 bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition duration-400 hover:-translate-y-1 hover:shadow-cyan-500/30 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 cursor-pointer"
                             >
                                 Predict match
