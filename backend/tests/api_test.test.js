@@ -1,8 +1,6 @@
-require('dotenv').config()
-
 describe('Match predictor API', () => {
     test('returns probabilities', async () => {
-        const URL = process.env.LINK || "https://world-cup-match-predictor.onrender.com/probabilities";
+        const URL = "https://strnadserver.pike-solfege.ts.net/probabilities";
 
         const params = {
             home_team: "argentina",
