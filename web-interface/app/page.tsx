@@ -10,6 +10,7 @@ import CountriesInput from "./Components/CountriesInput";
 import SubmitForm from "./lib/submitForm";
 import NeutralInput from "./Components/NeutralInput";
 import CountriesDatalist from "./Components/CountriesDatalist";
+import SubmitButton from "./Components/SumbitButton";
 
 export default function Home() {
     
@@ -104,17 +105,7 @@ export default function Home() {
 
                         <NeutralInput formData={formData} setFormData={setFormData}/>
 
-                        <div className="md:col-span-3 flex justify-end pt-2">
-                            <button
-                                id="submit_button"
-                                onClick={() => {
-                                    SubmitForm(formData, setChartData);
-                                }}
-                                className="group inline-flex items-center justify-center rounded-2xl border border-cyan-400/30 bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition duration-400 hover:-translate-y-1 hover:shadow-cyan-500/30 focus:outline-none focus:ring-2 focus:ring-cyan-300/60 cursor-pointer"
-                            >
-                                Predict match
-                            </button>
-                        </div>
+                        <SubmitButton formData={formData} setChartData={setChartData}/>
                     </div>
                 </section>
                 <section className="pt-4">
