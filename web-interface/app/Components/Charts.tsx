@@ -2,7 +2,7 @@
 
 const Charts = () => {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="">
                 <h2 className="flex justify-center pb-5">Home win</h2>
                 <canvas id="home_win_chart"></canvas>
