@@ -104,6 +104,11 @@ export default function Home() {
                         <Charts /> 
                     }
                 </section>
+                <div className="flex justify-center">
+                    <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
+                        <u><a target="_blank" href="https://github.com/strnadaljaz/world_cup_match_predictor">Source code</a></u>
+                    </p>
+                </div>
             </div >
         </main >
     );
