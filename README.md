@@ -3,6 +3,9 @@
 
 An AI-powered football match predictor that estimates the chances of a home win, draw, or away win for international matches.
 
+## App url
+App is live on: [https://international-match-predictor.vercel.app](https://international-match-predictor.vercel.app/)
+
 The project has two parts:
 
 - **Backend**: a Python FastAPI service that trains an XGBoost model from historical match data and serves probability predictions.
@@ -80,8 +83,9 @@ npm run dev
 By default the frontend calls the hosted backend at:
 
 ```text
-https://world-cup-match-predictor.onrender.com/probabilities
+https://strnadserver.pike-solfege.ts.net/api/probabilitis
 ```
+This point is available only for my hosted frontend, so for you it won't work. It doesn't accept requests from other IP's, because it would be to much for my home server.
 
 To point the UI at a different API, set:
 
