@@ -12,6 +12,7 @@ import NeutralInput from "./Components/NeutralInput";
 import CountriesDatalist from "./Components/CountriesDatalist";
 import SubmitButton from "./Components/SumbitButton";
 import Charts from "./Components/Charts";
+import Header from "./Components/Header";
 
 export default function Home() {
     
@@ -81,21 +82,7 @@ export default function Home() {
     return (
         <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.14),_transparent_28%),linear-gradient(180deg,#020617_0%,#030712_48%,#020617_100%)] text-slate-100">
             <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-6 py-10 sm:px-10 lg:px-12">
-                <div className="max-w-3xl">
-                    <p className="text-xs font-medium uppercase tracking-[0.35em] text-cyan-300/80">
-                        AI match predictor
-                    </p>
-                    <h1 className="mt-3 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-                        International match predictor
-                    </h1>
-                    <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
-                        Tune the match inputs now. Prediction charts and output
-                        will sit below this section later.
-                    </p>
-                    <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
-                        Model accuracy: <u>59.99%</u>
-                    </p>
-                </div>
+               <Header /> 
 
                 <section className="mt-10 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl sm:p-8">
                     <div className="grid gap-5 md:grid-cols-3">
