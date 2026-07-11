@@ -71,7 +71,7 @@ describe("button test", () => {
 
         await waitFor(() => {
             expect(fetch).toHaveBeenCalledWith(
-                "https://strnadserver.pike-solfege.ts.net/probabilities",
+                "https://strnadserver.pike-solfege.ts.net/api/probabilities",
                 expect.objectContaining({
                     method: "POST",
                     headers: {

@@ -1,6 +1,6 @@
 describe('Match predictor API', () => {
     test('returns probabilities', async () => {
-        const URL = "https://strnadserver.pike-solfege.ts.net/probabilities";
+        const URL = "https://strnadserver.pike-solfege.ts.net/api/probabilities";
 
         const params = {
             home_team: "argentina",
