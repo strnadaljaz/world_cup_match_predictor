@@ -11,7 +11,7 @@ const SubmitForm = async(formData: formDataType, setChartData: React.Dispatch<Re
             neutral: formData.neutral,
         };
 
-        const URL = process.env.NEXT_PUBLIC_IP || "https://strnadserver.pike-solfege.ts.net/probabilities";
+        const URL = process.env.NEXT_PUBLIC_IP || "https://strnadserver.pike-solfege.ts.net/api/probabilities";
 
         const response = await fetch(
             URL, {
