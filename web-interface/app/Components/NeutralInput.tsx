@@ -1,5 +1,4 @@
 "use client";
-import { formDataType } from "../lib/types";
 import { NeutralInputType } from "../lib/types";
 
 const NeutralInput = ({ formData, setFormData }: NeutralInputType) => {

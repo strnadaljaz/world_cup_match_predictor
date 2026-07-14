@@ -94,8 +94,6 @@ jest.mock("chart.js/auto", () => ({
     })),
 }));
 
-
-
 describe("Charts test", () => {
     const user = userEvent.setup();
 
