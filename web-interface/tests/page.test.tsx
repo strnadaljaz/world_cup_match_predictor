@@ -3,6 +3,10 @@ import userEvent from '@testing-library/user-event';
 import Home from '@/app/page';
 import "@testing-library/jest-dom"
 
+jest.mock("@vercel/analytics/next", () => ({
+    Analytics: () => null,
+}));
+
 global.fetch = jest.fn();
 
 describe('Input test', () => {
