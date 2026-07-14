@@ -23,9 +23,9 @@ const SubmitForm = async(formData: formDataType, setChartData: React.Dispatch<Re
         });
 
         const data = await response.json();
-        data["home_win"] *= 100;
-        data["away_win"] *= 100;
-        data["draw"] *= 100;
+        data.home_win *= 100;
+        data.away_win *= 100;
+        data.draw *= 100;
         setChartData(data);
     }
     else if (!formData.homeCountry || !formData.awayCountry) {

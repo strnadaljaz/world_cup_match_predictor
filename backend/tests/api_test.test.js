@@ -25,8 +25,8 @@ describe('Match predictor API', () => {
         expect(data).toHaveProperty("away_win");
         expect(data).toHaveProperty("draw");
 
-        expect(typeof data["home_win"]).toBe("number");
-        expect(typeof data["away_win"]).toBe("number");
-        expect(typeof data["draw"]).toBe("number");
+        expect(typeof data.home_win).toBe("number");
+        expect(typeof data.away_win).toBe("number");
+        expect(typeof data.draw).toBe("number");
     });
 });

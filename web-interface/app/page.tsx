@@ -1,13 +1,10 @@
 "use client"
-import { countries } from "@/app/lib/countries";
-import { useState } from "react";
 import { useEffect } from "react";
 import { Chart } from "chart.js/auto";
 import { COLORS } from "./lib/colors";
 import { useChartData } from "./hooks/useChartData";
 import { useFormData } from "./hooks/useFormData";
 import CountriesInput from "./Components/CountriesInput";
-import SubmitForm from "./lib/submitForm";
 import NeutralInput from "./Components/NeutralInput";
 import CountriesDatalist from "./Components/CountriesDatalist";
 import SubmitButton from "./Components/SumbitButton";
