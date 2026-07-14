@@ -3,7 +3,7 @@ from football.teams import createTeams
 from xgboost import XGBClassifier
 from Team import Team
 from numpy import ndarray
-from model.model import calculateProbabilities
+from model.model import calculateProbabilities, explanationData
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from football.trainer import getTrainingData
@@ -69,12 +69,23 @@ async def probabilities(
             model
         )
 
+        explanation_data = await asyncio.to_thread(
+            explanationData,
+            req.home_team,
+            req.away_team, 
+            team_map,
+            model    
+        )
+
         probs_list = probs.tolist()
 
         data = {
-            "home_win": probs_list[2],
-            "draw": probs_list[1],
-            "away_win": probs_list[0]
+            "probabilities": {
+                "home_win": probs_list[2],
+                "draw": probs_list[1],
+                "away_win": probs_list[0],
+            },
+            "explanation_data": explanation_data
         }
 
         return data

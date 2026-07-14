@@ -54,6 +54,31 @@ def calculateProbabilities(home_team: str, away_team: str, team_map: dict, neutr
     return probs
 
 
+# Gets the data for the explanation of the probabilities
+def explanationData(home_team: str, away_team: str, team_map: dict, model: xgb.XGBClassifier) -> map:
+    home = team_map[home_team]
+    away = team_map[away_team]
+
+    # Take only last five matches
+    index = len(home.goals_scored) - 5
+
+    home_goal_diff: int = sum(home.goals_scored[index:]) - sum(home.goals_received[index:])
+    away_goal_diff: int = sum(away.goals_scored[index:]) - sum(away.goals_received[index:])
+
+    data = {
+        "home_goal_diff": home_goal_diff,
+        "away_goal_diff": away_goal_diff,
+        "home_form": home.form[index:],
+        "away_form": away.form[index:],
+        "home_elo": home.elo,
+        "away_elo": away.elo,
+        "home_fifa_rank": home.fifa_rank,
+        "away_fifa_rank": away.fifa_rank
+    }
+
+    return data
+
+
 def saveModel(model: xgb.XGBClassifier, file_name: str):
     model.save_model(file_name)
 
