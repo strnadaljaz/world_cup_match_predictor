@@ -23,10 +23,13 @@ const SubmitForm = async(formData: formDataType, setChartData: React.Dispatch<Re
         });
 
         const data = await response.json();
-        data.home_win *= 100;
-        data.away_win *= 100;
-        data.draw *= 100;
-        setChartData(data);
+
+        let chart_data = data.probabilities;
+
+        chart_data.home_win *= 100;
+        chart_data.away_win *= 100;
+        chart_data.draw *= 100;
+        setChartData(chart_data);
     }
     else if (!formData.homeCountry || !formData.awayCountry) {
         alert("Enter both countries!");
