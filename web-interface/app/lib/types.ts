@@ -26,4 +26,16 @@ export type NeutralInputType = {
 export type SubmitButtonType = {
     formData: formDataType;
     setChartData: React.Dispatch<React.SetStateAction<chartDataType>>;
+    setExplanationData: React.Dispatch<React.SetStateAction<explanationDataType>>;
+}
+
+export type explanationDataType = {
+    home_goal_diff: null | number;
+    away_goal_diff: null | number;
+    home_form: null | Array<Number>;
+    away_form: null | Array<Number>;
+    home_elo: null | number;
+    away_elo: null | number;
+    home_fifa_rank: null | number;
+    away_fifa_rank: null | number; 
 }

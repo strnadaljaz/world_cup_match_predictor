@@ -10,11 +10,13 @@ import CountriesDatalist from "./Components/CountriesDatalist";
 import SubmitButton from "./Components/SumbitButton";
 import Charts from "./Components/Charts";
 import Header from "./Components/Header";
+import useExplanationData from "./hooks/useExplanationData";
 
 export default function Home() {
     
     const { chartData, setChartData } = useChartData();
     const { formData, setFormData } = useFormData(); 
+    const { explanationData, setExplanationData } = useExplanationData();
     
     useEffect(() => {
         let charts: Chart[] = [];
@@ -90,7 +92,7 @@ export default function Home() {
 
                         <NeutralInput formData={formData} setFormData={setFormData}/>
 
-                        <SubmitButton formData={formData} setChartData={setChartData}/>
+                        <SubmitButton formData={formData} setChartData={setChartData} setExplanationData={setExplanationData}/>
                     </div>
                 </section>
                 <section className="pt-4">
