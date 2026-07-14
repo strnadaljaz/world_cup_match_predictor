@@ -100,7 +100,7 @@ export default function Home() {
                 </section>
                 <section className="mt-8 flex-1 rounded-3xl border border-dashed border-white/10 bg-slate-950/30 p-6 text-sm text-slate-400 sm:p-8">
                     {(chartData.home_win != null) &&
-                        <Charts /> 
+                        <Charts explanationData={explanationData}/> 
                     }
                 </section>
                 <div className="flex justify-center">
