@@ -45,7 +45,23 @@ describe("button test", () => {
     test('does button trigger correct post request', async () => {
         (fetch as jest.Mock).mockResolvedValue({
             ok: true,
-            json: async () => ({ success: true }),
+            json: async () => ({
+                probabilities: {
+                    home_win: 0.5,
+                    draw: 0.2,
+                    away_win: 0.3,
+                },
+                explanation_data: {
+                    home_goal_diff: 5,
+                    away_goal_diff: -1,
+                    home_form: [1, 1, 1, 1, 1],
+                    away_form: [0, 0, 0, 0, 0],
+                    home_elo: 2000,
+                    away_elo: 1500,
+                    home_fifa_rank: 1,
+                    away_fifa_rank: 30,
+                },
+            }),
         });
 
         render(<Home />);
@@ -101,9 +117,21 @@ describe("Charts test", () => {
         (fetch as jest.Mock).mockResolvedValue({
             ok: true,
             json: async () => ({
-                home_win: 0.5,
-                draw: 0.2,
-                away_win: 0.3
+                "probabilities": {
+                    home_win: 0.5,
+                    draw: 0.2,
+                    away_win: 0.3
+                },
+                "explanation_data": {
+                    "home_goal_diff": 5,
+                    "away_goal_diff": -1,
+                    "home_form": [1, 1, 1, 1, 1],
+                    "away_form": [0, 0, 0, 0, 0],
+                    "home_elo": 2000,
+                    "away_elo": 1500,
+                    "home_fifa_rank": 1,
+                    "away_fifa_rank": 30
+                }
             }),
         });
 
