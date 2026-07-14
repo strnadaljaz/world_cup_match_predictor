@@ -10,6 +10,7 @@ import CountriesDatalist from "./Components/CountriesDatalist";
 import SubmitButton from "./Components/SumbitButton";
 import Charts from "./Components/Charts";
 import Header from "./Components/Header";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function Home() {
     
@@ -77,6 +78,7 @@ export default function Home() {
     }, [chartData]); 
 
     return (
+        <>
         <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.14),_transparent_28%),linear-gradient(180deg,#020617_0%,#030712_48%,#020617_100%)] text-slate-100">
             <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col px-6 py-10 sm:px-10 lg:px-12">
                <Header /> 
@@ -108,5 +110,7 @@ export default function Home() {
                 </div>
             </div >
         </main >
+        <Analytics />
+        </>
     );
 }
