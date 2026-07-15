@@ -1,4 +1,3 @@
-// TODO: adapt this test to new arhitecture
 describe('Match predictor API', () => {
     test('returns probabilities', async () => {
         const URL = "https://strnadserver.pike-solfege.ts.net/api/probabilities";
@@ -22,12 +21,33 @@ describe('Match predictor API', () => {
 
         const data = await response.json();
 
-        expect(data).toHaveProperty("home_win");
-        expect(data).toHaveProperty("away_win");
-        expect(data).toHaveProperty("draw");
+        const probabilities = data.probabilities;
+        const explanationData = data.explanation_data;
 
-        expect(typeof data.home_win).toBe("number");
-        expect(typeof data.away_win).toBe("number");
-        expect(typeof data.draw).toBe("number");
+        expect(probabilities).toHaveProperty("home_win");
+        expect(probabilities).toHaveProperty("away_win");
+        expect(probabilities).toHaveProperty("draw");
+
+        expect(explanationData).toHaveProperty("home_goal_diff");
+        expect(explanationData).toHaveProperty("away_goal_diff");
+        expect(explanationData).toHaveProperty("home_form");
+        expect(explanationData).toHaveProperty("away_form");
+        expect(explanationData).toHaveProperty("home_elo");
+        expect(explanationData).toHaveProperty("away_elo");
+        expect(explanationData).toHaveProperty("home_fifa_rank");
+        expect(explanationData).toHaveProperty("away_fifa_rank");
+
+        expect(typeof probabilities.home_win).toBe("number");
+        expect(typeof probabilities.away_win).toBe("number");
+        expect(typeof probabilities.draw).toBe("number");
+
+        expect(typeof explanationData.home_goal_diff).toBe("number");
+        expect(typeof explanationData.away_goal_diff).toBe("number");
+        expect(typeof explanationData.home_form).toBe("object");
+        expect(typeof explanationData.away_form).toBe("object");
+        expect(typeof explanationData.home_elo).toBe("number");
+        expect(typeof explanationData.away_elo).toBe("number");
+        expect(typeof explanationData.home_fifa_rank).toBe("string");
+        expect(typeof explanationData.away_fifa_rank).toBe("string");
     });
 });
