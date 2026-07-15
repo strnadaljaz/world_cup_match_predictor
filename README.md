@@ -1,3 +1,4 @@
+![](demo.gif)
 
 # World Cup Match Predictor
 
