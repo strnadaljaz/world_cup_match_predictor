@@ -11,6 +11,7 @@ import SubmitButton from "./Components/SumbitButton";
 import Charts from "./Components/Charts";
 import Header from "./Components/Header";
 import useExplanationData from "./hooks/useExplanationData";
+import Explanations from "./Components/Explanations";
 
 export default function Home() {
     
@@ -100,8 +101,13 @@ export default function Home() {
                 </section>
                 <section className="mt-8 flex-1 rounded-3xl border border-dashed border-white/10 bg-slate-950/30 p-6 text-sm text-slate-400 sm:p-8">
                     {(chartData.home_win != null) &&
-                        <Charts explanationData={explanationData}/> 
+                        <Charts /> 
                     }
+                </section>
+                <section className="mt-8 flex-1 rounded-3xl border border-dashed border-white/10 bg-slate-950/30 p-6 text-sm text-slate-400 sm:p-8">
+                    {(explanationData.home_form != null) &&
+                        <Explanations explanationData={explanationData}/>
+                    }   
                 </section>
                 <div className="flex justify-center">
                     <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
