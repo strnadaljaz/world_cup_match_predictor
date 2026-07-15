@@ -1,7 +1,6 @@
-import { formDataType } from "./types";
-import { chartDataType } from "./types";
+import { formDataType, chartDataType, explanationDataType } from "./types";
 
-const SubmitForm = async(formData: formDataType, setChartData: React.Dispatch<React.SetStateAction<chartDataType>>) => {
+const SubmitForm = async(formData: formDataType, setChartData: React.Dispatch<React.SetStateAction<chartDataType>>, setExplanationData: React.Dispatch<React.SetStateAction<explanationDataType>>) => {
     if (formData.homeCountry &&
         formData.awayCountry &&
         (formData.homeCountry != formData.awayCountry)) {
@@ -23,10 +22,17 @@ const SubmitForm = async(formData: formDataType, setChartData: React.Dispatch<Re
         });
 
         const data = await response.json();
-        data.home_win *= 100;
-        data.away_win *= 100;
-        data.draw *= 100;
-        setChartData(data);
+
+        let chart_data = data.probabilities;
+        let explanation_data = data.explanation_data;
+
+        setExplanationData(explanation_data);
+
+        chart_data.home_win *= 100;
+        chart_data.away_win *= 100;
+        chart_data.draw *= 100;
+        setChartData(chart_data);
+        setExplanationData(explanation_data);
     }
     else if (!formData.homeCountry || !formData.awayCountry) {
         alert("Enter both countries!");

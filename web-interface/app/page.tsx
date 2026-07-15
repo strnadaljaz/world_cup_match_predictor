@@ -10,12 +10,15 @@ import CountriesDatalist from "./Components/CountriesDatalist";
 import SubmitButton from "./Components/SumbitButton";
 import Charts from "./Components/Charts";
 import Header from "./Components/Header";
+import useExplanationData from "./hooks/useExplanationData";
+import Explanations from "./Components/Explanations";
 import { Analytics } from "@vercel/analytics/next";
 
 export default function Home() {
     
     const { chartData, setChartData } = useChartData();
     const { formData, setFormData } = useFormData(); 
+    const { explanationData, setExplanationData } = useExplanationData();
     
     useEffect(() => {
         let charts: Chart[] = [];
@@ -60,15 +63,15 @@ export default function Home() {
         }
 
         if (chartData.home_win != null) {
-            createAnimatedDoughnutChart("home_win_chart", chartData.home_win, COLORS.home, 0);
+            createAnimatedDoughnutChart("home_win_chart", Math.round(chartData.home_win), COLORS.home, 0);
         }
 
         if (chartData.draw != null) {
-            createAnimatedDoughnutChart("draw_chart", chartData.draw, COLORS.draw, 120);
+            createAnimatedDoughnutChart("draw_chart", Math.round(chartData.draw), COLORS.draw, 120);
         }
 
         if (chartData.away_win != null) {
-            createAnimatedDoughnutChart("away_win_chart", chartData.away_win, COLORS.away, 240);
+            createAnimatedDoughnutChart("away_win_chart", Math.round(chartData.away_win), COLORS.away, 240);
         }
 
         return () => {
@@ -92,7 +95,7 @@ export default function Home() {
 
                         <NeutralInput formData={formData} setFormData={setFormData}/>
 
-                        <SubmitButton formData={formData} setChartData={setChartData}/>
+                        <SubmitButton formData={formData} setChartData={setChartData} setExplanationData={setExplanationData}/>
                     </div>
                 </section>
                 <section className="pt-4">
@@ -102,6 +105,11 @@ export default function Home() {
                     {(chartData.home_win != null) &&
                         <Charts /> 
                     }
+                </section>
+                <section className="mt-8 flex-1 rounded-3xl border border-dashed border-white/10 bg-slate-950/30 p-6 text-sm text-slate-400 sm:p-8">
+                    {(explanationData.home_form != null) &&
+                        <Explanations explanationData={explanationData}/>
+                    }   
                 </section>
                 <div className="flex justify-center">
                     <p className="mt-4 max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
