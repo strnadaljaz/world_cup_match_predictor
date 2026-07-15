@@ -62,15 +62,15 @@ export default function Home() {
         }
 
         if (chartData.home_win != null) {
-            createAnimatedDoughnutChart("home_win_chart", chartData.home_win, COLORS.home, 0);
+            createAnimatedDoughnutChart("home_win_chart", Math.round(chartData.home_win), COLORS.home, 0);
         }
 
         if (chartData.draw != null) {
-            createAnimatedDoughnutChart("draw_chart", chartData.draw, COLORS.draw, 120);
+            createAnimatedDoughnutChart("draw_chart", Math.round(chartData.draw), COLORS.draw, 120);
         }
 
         if (chartData.away_win != null) {
-            createAnimatedDoughnutChart("away_win_chart", chartData.away_win, COLORS.away, 240);
+            createAnimatedDoughnutChart("away_win_chart", Math.round(chartData.away_win), COLORS.away, 240);
         }
 
         return () => {
