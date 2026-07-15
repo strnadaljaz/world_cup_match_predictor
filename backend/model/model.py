@@ -70,8 +70,8 @@ def explanationData(home_team: str, away_team: str, team_map: dict, model: xgb.X
         "away_goal_diff": away_goal_diff,
         "home_form": home.form[index:],
         "away_form": away.form[index:],
-        "home_elo": home.elo,
-        "away_elo": away.elo,
+        "home_elo": round(home.elo),
+        "away_elo": round(away.elo),
         "home_fifa_rank": home.fifa_rank,
         "away_fifa_rank": away.fifa_rank
     }
