@@ -30,8 +30,9 @@ type TeamStatsParameters = {
 }
 
 const TeamStats = ({ teamName, form, goalDiff, fifaRank, elo }: TeamStatsParameters) => {
+    const teamDiv = teamName + " explanation div";
     return (
-        <div className="space-y-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4">
+        <div className="space-y-4 rounded-2xl border border-white/10 bg-slate-950/40 p-4" id={ teamDiv }>
             <h1 className="text-xl font-semibold text-white">
                 {teamName}
             </h1>
