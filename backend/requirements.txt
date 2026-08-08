@@ -6,3 +6,4 @@ xgboost
 fastapi
 uvicorn
 requests
+pytest
