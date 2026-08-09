@@ -114,7 +114,7 @@ jest.mock("chart.js/auto", () => ({
     })),
 }));
 
-describe("Output data test", () => {
+describe("Output data and explanations test", () => {
     const user = userEvent.setup();
 
     test("Charts load", async () => {
@@ -156,45 +156,7 @@ describe("Output data test", () => {
             expect(document.getElementById("home_win_chart")).toBeInTheDocument();
             expect(document.getElementById("draw_chart")).toBeInTheDocument();
             expect(document.getElementById("away_win_chart")).toBeInTheDocument();
-        });
-    });
 
-    test("explanation data loads", async () => {
-        (fetch as jest.Mock).mockResolvedValue({
-            ok: true,
-            json: async () => ({
-                "probabilities": {
-                    home_win: 0.5,
-                    draw: 0.2,
-                    away_win: 0.3
-                },
-                "explanation_data": {
-                    "home_goal_diff": 5,
-                    "away_goal_diff": -1,
-                    "home_form": [1, 1, 1, 1, 1],
-                    "away_form": [0, 0, 0, 0, 0],
-                    "home_elo": 2000,
-                    "away_elo": 1500,
-                    "home_fifa_rank": 1,
-                    "away_fifa_rank": 30
-                }
-            }),
-        });
-
-        render(<Home />);
-
-        const home_select = screen.getByLabelText("Home country");
-        await user.type(home_select, 'Argentina');
-
-        const away_select = screen.getByLabelText("Away country");
-        await user.type(away_select, 'Brazil');
-
-        const neutral_select = screen.getByLabelText('Neutral ground');
-        await user.selectOptions(neutral_select, 'Yes');
-
-        await user.click(screen.getByText("Predict match"));
-
-        await waitFor(() => {
             expect(document.getElementById("Home Team explanation div")).toBeInTheDocument();
             expect(document.getElementById("Away Team explanation div")).toBeInTheDocument();
         });
