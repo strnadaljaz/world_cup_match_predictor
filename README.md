@@ -4,33 +4,63 @@
 
 An AI-powered football match predictor that estimates the chances of a home win, draw, or away win for international matches.
 
-## App url
-App is live on: [https://international-match-predictor.vercel.app](https://international-match-predictor.vercel.app/)
+**Live demo:** https://international-match-predictor.vercel.app
 
-The project has two parts:
+---
 
-- **Backend**: a Python FastAPI service that trains an XGBoost model from historical match data and serves probability predictions.
-- **Frontend**: a Next.js app that lets you pick two national teams and display the prediction as animated charts.
+## Results
+
+- Trained on **5,000+ historical international matches**
+- Achieves **60% accuracy** on match outcome prediction (home win / draw / away win)
+- Serves predictions through a FastAPI backend and displays them in an animated Next.js frontend
+
+> **Note:** The live demo uses a backend hosted on my home server, which only accepts requests from the hosted frontend. To run it locally, follow the setup instructions below.
+
+---
+
+## How it works
+
+1. Historical match results and FIFA rankings are cleaned and merged into a single dataset.
+2. Team state is built from past performances (form, ranking, home/away context).
+3. An XGBoost classifier is trained to output probabilities for all three outcomes.
+4. The FastAPI backend exposes a `POST /probabilities` endpoint.
+5. The Next.js frontend lets users pick two national teams and renders the prediction as animated doughnut charts.
+
+---
 
 ## Features
 
-- Predicts **home win**, **draw**, and **away win** probabilities
+- Predicts home win, draw, and away win probabilities
 - Supports a large list of national teams
-- Optional **neutral ground** input
+- Optional neutral ground input
 - Animated doughnut charts for results in the UI
+- Backend API with CORS enabled for the frontend
+- Input validation (both teams selected, home ≠ away)
+
+---
+
+## Tech stack
+
+**Backend:** Python 3.12, FastAPI, XGBoost, pandas, Uvicorn  
+**Frontend:** Next.js 18+, TypeScript, animated charts  
+**Data:** historical match results + FIFA rankings (CSV)
+
+---
 
 ## Project structure
+backend/ Python API, model training, CSV data, and backend tests
+web-interface/ Next.js frontend and UI tests
 
-```text
-backend/        Python API, model training, CSV data, and backend tests
-web-interface/  Next.js frontend and UI tests
-```
+
+---
 
 ## Requirements
 
 - Node.js 18+
 - Python 3.12+
 - npm
+
+---
 
 ## Backend setup
 
@@ -44,18 +74,16 @@ pip install -r requirements.txt
 ```
 
 Run the API with Uvicorn:
-
 ```bash
+
 uvicorn api.api:app --reload
 ```
-
-The service exposes:
-
-- `POST /probabilities`
+The service exposes: POST /probabilities
 
 Example request:
 
 ```json
+
 {
   "home_team": "argentina",
   "away_team": "brazil",
@@ -64,32 +92,28 @@ Example request:
 ```
 
 Example response:
-
 ```json
+
 {
   "home_win": 0.52,
   "draw": 0.24,
   "away_win": 0.24
 }
 ```
-
 ## Frontend setup
-
 ```bash
 cd web-interface
 npm install
 npm run dev
 ```
 
-By default the frontend calls the hosted backend at:
+By default, the frontend calls the hosted backend at:
 
-```text
 https://strnadserver.pike-solfege.ts.net/api/probabilitis
-```
-This point is available only for my hosted frontend, so for you it won't work. It doesn't accept requests from other IP's, because it would be to much for my home server.
+
+This endpoint is available only for my hosted frontend, so it won't work for you. It doesn't accept requests from other IPs, because it would be too much for my home server.
 
 To point the UI at a different API, set:
-
 ```bash
 NEXT_PUBLIC_LINK=http://localhost:8000/probabilities
 ```
@@ -97,13 +121,10 @@ NEXT_PUBLIC_LINK=http://localhost:8000/probabilities
 ## Running tests
 
 From the repository root:
-
 ```bash
 npm test
 ```
-
 Or run each package separately:
-
 ```bash
 npm run test:backend
 npm run test:frontend
@@ -111,14 +132,15 @@ npm run test:frontend
 
 ## Data and model
 
-The backend trains on the CSV files in `backend/`, including:
+The backend trains on the CSV files in backend/, including:
 
-- `results.csv`
-- `fifa_rankings.csv`
+    results.csv
 
-Team state is built from historical data, then an XGBoost classifier is trained to produce match outcome probabilities.
+    fifa_rankings.csv
 
-## Notes
+Team state is built from historical data, then an XGBoost classifier is trained to produce match outcome probabilities. The model outputs calibrated probabilities for all three outcomes (home win / draw / away win).
+Notes
 
-- The backend API is CORS-enabled for the frontend.
-- The UI validates that both teams are selected and that the home and away teams are different.
+The backend API is CORS-enabled for the frontend.
+
+The UI validates that both teams are selected and that the home and away teams are different.
