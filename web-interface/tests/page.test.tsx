@@ -153,9 +153,7 @@ describe("Output data and explanations test", () => {
         await user.click(screen.getByText("Predict match"));
 
         await waitFor(() => {
-            expect(document.getElementById("home_win_chart")).toBeInTheDocument();
-            expect(document.getElementById("draw_chart")).toBeInTheDocument();
-            expect(document.getElementById("away_win_chart")).toBeInTheDocument();
+            expect(document.getElementById("prediction_chart")).toBeInTheDocument();
 
             expect(document.getElementById("Home Team explanation div")).toBeInTheDocument();
             expect(document.getElementById("Away Team explanation div")).toBeInTheDocument();
